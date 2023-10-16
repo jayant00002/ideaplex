@@ -1,0 +1,23 @@
+{
+  "name": "daily-web-examples",
+  "version": "0.1.0",
+  "repository": "git@github.com:daily-co/daily-web-examples.git",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "custom/*",
+    "prebuilt/*"
+  ],
+  "engines": {
+    "node": ">=0.12"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-inline-react-svg": "^2.0.1",
+    "eslint": "^7.25.0",
+    "eslint-config-next": "^11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0"
+  }
+}
