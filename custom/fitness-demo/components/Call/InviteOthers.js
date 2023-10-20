@@ -90,11 +90,19 @@ export const InviteOthers = () => {
             
             :global(.invite-others .card) {
               border: 0!important;
-              width: 40vw;
+              width: 50vw;
             }
             
             :global(.invite-others .card input) {
               width: 15vw;
+            }
+            @media (max-width: 768px) {
+              :global(.invite-others .card) {
+                width: 90vw;
+              }
+              :global(.invite-others .card input) {
+                width: 60vw;
+              }
             }
           `}</style>
         </div>

@@ -52,6 +52,12 @@ export const TrayButton = ({
           font-weight: var(--weight-medium);
           font-size: 12px;
         }
+        @media (max-width: 768px) {
+          .tray-button .button {
+            width: 40px !important;
+            height: 40px !important;
+          }
+        }
       `}</style>
     </div>
   );

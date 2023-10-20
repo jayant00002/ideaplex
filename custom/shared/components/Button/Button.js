@@ -382,6 +382,44 @@ export const Button = forwardRef(
           .button.muted {
             color: var(--red-default);
           }
+          @media (max-width: 640px) {
+            .button.large-square{
+              height: 42px;
+              width: 42px;
+            }
+            .button.medium-square{
+              height: 42px;
+              width: 42px;
+            }
+            .button.small-square{
+              height: 42px;
+              width: 42px;
+            }
+            .button.tiny-square{
+              height: 32px;
+              width: 32px;
+            }
+            .button.large-circle{
+              height: 42px;
+              width: 42px;
+              border-radius: 21px;
+            }
+            .button.small-circle{
+              height: 32px;
+              width: 32px;
+              border-radius: 16px;
+            }
+            .button.tiny{
+              height: 28px;
+              width: 28px;
+              border-radius: 14px;
+            }
+            .button-outline-primary{
+              height: 42px;
+              padding: 0px;
+            }
+
+          }
         `}</style>
       </>
     );

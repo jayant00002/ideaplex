@@ -55,57 +55,63 @@ export const ChatAside = () => {
   return (
     <Aside onClose={() => setShowAside(false)}>
       <AsideHeader />
-      <Card variant='primary ma-2'>
-      <CardBody>
-        <div className="info-container">
-          {(localParticipant?.isObserver) ? ( <p>The Ques is for the observers and moderators only. You can ask any questions here. Any message you send here will be visible to the moderators and observers only.</p>
-          ) :
-           (
-            <p>The Chat is for the participants and moderators only. Any message you send here will be visible to the moderators and participants only.</p>
-          )}
-        </div>
-      </CardBody>
-    </Card>
-      
-      {localParticipant?.isOwner  && (
-        <div className="messages-container" ref={chatWindowRef}>
-        { chatHistory?.map((chatItem) => (
-          <div className={(chatItem.isObserver  || chatItem.receiver ==='observer') ? 'hide' : 'show'}
-          key={chatItem.id}
-          >
-          <div
-            className={chatItem.isLocal ? 'message local' : 'message'}
-            key={chatItem.id}
-          >
-            <span className="content">{chatItem.message}</span>
-            <span className="sender">{chatItem.sender}</span>
-
-          </div>
-          </div>
-        ))}
+      <div className="info-container">
+        {localParticipant?.isObserver ? (
+          <p>
+            The Ques is for the observers and moderators only. You can ask any
+            questions here. Any message you send here will be visible to the
+            moderators and observers only.
+          </p>
+        ) : (
+          <p>
+            The Chat is for the participants and moderators only. Any message
+            you send here will be visible to the moderators and participants
+            only.
+          </p>
+        )}
       </div>
+
+      {localParticipant?.isOwner && (
+        <div className="messages-container" ref={chatWindowRef}>
+          {chatHistory?.map((chatItem) => (
+            <div
+              className={
+                chatItem.isObserver || chatItem.receiver === 'observer'
+                  ? 'hide'
+                  : 'show'
+              }
+              key={chatItem.id}
+            >
+              <div
+                className={chatItem.isLocal ? 'message local' : 'message'}
+                key={chatItem.id}
+              >
+                <span className="content">{chatItem.message}</span>
+                <span className="sender">{chatItem.sender}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
 
-{!localParticipant?.isOwner && (
-    <>
-
-      <div className="messages-container" ref={chatWindowRef}>
-        {chatHistory?.map((chatItem) => (
-          <div
-            className={chatItem.isLocal ? 'message local' : 'message'}
-            key={chatItem.id}
-          >
-            <span className="content">{chatItem.message}</span>
-            <span className="sender">{chatItem.sender}</span>
-           
+      {!localParticipant?.isOwner && (
+        <>
+          <div className="messages-container" ref={chatWindowRef}>
+            {chatHistory?.map((chatItem) => (
+              <div
+                className={chatItem.isLocal ? 'message local' : 'message'}
+                key={chatItem.id}
+              >
+                <span className="content">{chatItem.message}</span>
+                <span className="sender">{chatItem.sender}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </>
+        </>
       )}
       {showEmojis && (
         <div className="emojis">
-          {emojis.map(emoji => (
+          {emojis.map((emoji) => (
             <Button
               key={emoji}
               variant="gray"
@@ -117,7 +123,7 @@ export const ChatAside = () => {
           ))}
         </div>
       )}
-      <footer className={"chat-footer"}>
+      <footer className={'chat-footer'}>
         <Button
           variant="gray"
           size="small-circle"
@@ -128,7 +134,7 @@ export const ChatAside = () => {
         <TextInput
           value={newMessage}
           placeholder="Type message here"
-          variant={"transparent"}
+          variant={'transparent'}
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <Button
@@ -136,14 +142,11 @@ export const ChatAside = () => {
           variant="transparent"
           disabled={!newMessage}
           onClick={() => {
-            
-           if( localParticipant?.isOwner){
-              sendMessage(newMessage, 'participant')
-            }
-            else if(localParticipant?.isObserver){
-              sendMessage(newMessage, 'owner')
-            }
-            else{
+            if (localParticipant?.isOwner) {
+              sendMessage(newMessage, 'participant');
+            } else if (localParticipant?.isObserver) {
+              sendMessage(newMessage, 'owner');
+            } else {
               sendMessage(newMessage);
             }
             setNewMessage('');
@@ -181,6 +184,11 @@ export const ChatAside = () => {
         }
         .info-container {
           color: var(--primary-dark);
+          width: 100%;
+          background-color: #d9edf7;
+          margin-top: 20px;
+          padding: 20px;
+          border-radius: 8px;
         }
         .observer-tab {
           background: #3c3e46;
@@ -234,7 +242,7 @@ export const ChatAside = () => {
           color: var(--gray-dark);
           margin-top: 0.5rem;
         }
-        
+
         .tab {
           height: 100%;
           width: 50%;
@@ -243,10 +251,10 @@ export const ChatAside = () => {
           justify-content: center;
           align-items: center;
         }
-        
+
         .tab.active {
-          background: #1bebb9!important;
-          color: var(--text-default)!important;
+          background: #1bebb9 !important;
+          color: var(--text-default) !important;
           font-weight: 900;
         }
         .hide {

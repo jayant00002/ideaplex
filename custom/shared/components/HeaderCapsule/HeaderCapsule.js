@@ -52,6 +52,12 @@ export const HeaderCapsule = ({ children, variant }) => {
             opacity: 1;
           }
         }
+        @media (max-width: 768px) {
+          .capsule {
+            min-height: 30px;
+          }
+        }
+        
       `}</style>
     </div>
   );

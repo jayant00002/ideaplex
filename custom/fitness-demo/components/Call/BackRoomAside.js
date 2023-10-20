@@ -51,31 +51,28 @@ export const BackRoomAside = () => {
 
   return (
     <Aside onClose={() => setShowAside(false)}>
-        <BackRoomHeader />
-        <Card variant="primary" className="ma-2">
-            <CardBody>
-                <div className="info-container">
-                    The BackRoom is for the observers only. Any messages sent here will not be seen by the participants or the moderators in the meeting.
-                </div>
-                </CardBody>
-                </Card>
-{!localParticipant?.isOwner && (
-      <div className="messages-container" ref={chatWindowRef}>
-        {backroomChatHistory?.map((chatItem) => (
-          <div
-            className={chatItem.isLocal ? 'message local' : 'message'}
-            key={chatItem.id}
-          >
-            <span className="content">{chatItem.message}</span>
-            <span className="sender">{chatItem.sender}</span>
-           
-          </div>
-        ))}
+      <BackRoomHeader />
+      <div className="info-container">
+        The BackRoom is for the observers only. Any messages sent here will not
+        be seen by the participants or the moderators in the meeting.
       </div>
+
+      {!localParticipant?.isOwner && (
+        <div className="messages-container" ref={chatWindowRef}>
+          {backroomChatHistory?.map((chatItem) => (
+            <div
+              className={chatItem.isLocal ? 'message local' : 'message'}
+              key={chatItem.id}
+            >
+              <span className="content">{chatItem.message}</span>
+              <span className="sender">{chatItem.sender}</span>
+            </div>
+          ))}
+        </div>
       )}
       {showEmojis && (
         <div className="emojis">
-          {emojis.map(emoji => (
+          {emojis.map((emoji) => (
             <Button
               key={emoji}
               variant="gray"
@@ -106,7 +103,7 @@ export const BackRoomAside = () => {
           variant="transparent"
           disabled={!newMessage}
           onClick={() => {
-            sendMessage(newMessage,'observer');
+            sendMessage(newMessage, 'observer');
             setNewMessage('');
           }}
         >
@@ -127,9 +124,14 @@ export const BackRoomAside = () => {
           border-radius: var(--radius-md);
           box-shadow: var(--shadow-depth-2);
         }
-         .info-container {
-            color: var(--primary-dark);
-         }
+        .info-container {
+          color: var(--primary-dark);
+          width: 100%;
+          background-color: #d9edf7;
+          margin-top: 20px;
+          padding: 20px;
+          border-radius: 8px;
+        }
         .messages-container {
           flex: 1;
           overflow-y: scroll;
@@ -194,7 +196,7 @@ export const BackRoomAside = () => {
           color: var(--gray-dark);
           margin-top: 0.5rem;
         }
-        
+
         .tab {
           height: 100%;
           width: 50%;
@@ -203,10 +205,10 @@ export const BackRoomAside = () => {
           justify-content: center;
           align-items: center;
         }
-        
+
         .tab.active {
-          background: #1bebb9!important;
-          color: var(--text-default)!important;
+          background: #1bebb9 !important;
+          color: var(--text-default) !important;
           font-weight: 900;
         }
         .hide {

@@ -23,7 +23,11 @@ import { ReactComponent as LowerHand } from '@custom/shared/icons/lowerHand.svg'
 import { useMediaDevices } from '../../contexts/MediaDeviceProvider';
 import { useParticipants } from '../../contexts/ParticipantsProvider';
 import { Tray, TrayButton } from './Tray';
-
+import ChatTray from '../../../fitness-demo/components/Tray/Chat';
+import BackRoomTray from '../../../fitness-demo/components/Tray/BackRoom';
+import QuesTray from '../../../fitness-demo/components/Tray/Ques';
+import RecordTray from '../../../fitness-demo/components/Tray/Record';
+import TranscriptTray from '../../../fitness-demo/components/Tray/Transcript';
 export const BasicTray = () => {
   const ref = useRef(null);
   const responsive = useResponsive();
@@ -100,22 +104,22 @@ export const BasicTray = () => {
     <Tray className="tray">
       {!localParticipant.isObserver && (
         <>
-      <TrayButton
-        label="Camera"
-        onClick={() => toggleCamera(isCamMuted)}
-        orange={isCamMuted}
-      >
-        {isCamMuted ? <IconCameraOff /> : <IconCameraOn />}
-      </TrayButton>
-    
-      <TrayButton
-        label="Mic"
-        onClick={() => toggleMic(isMicMuted)}
-        orange={isMicMuted}
-      >
-        {isMicMuted ? <IconMicOff /> : <IconMicOn />}
-      </TrayButton>
-      </>
+          <TrayButton
+            label="Camera"
+            onClick={() => toggleCamera(isCamMuted)}
+            orange={isCamMuted}
+          >
+            {isCamMuted ? <IconCameraOff /> : <IconCameraOn />}
+          </TrayButton>
+
+          <TrayButton
+            label="Mic"
+            onClick={() => toggleMic(isMicMuted)}
+            orange={isMicMuted}
+          >
+            {isMicMuted ? <IconMicOff /> : <IconMicOn />}
+          </TrayButton>
+        </>
       )}
       {responsive.isMobile() && showMore && (
         <div className="more-options" ref={ref}>
@@ -126,16 +130,26 @@ export const BasicTray = () => {
           >
             Settings
           </Button>
-
-       {localParticipant.isOwner && (
-          <Button
-            className="translucent"
-            onClick={() => toggleAside(PEOPLE_ASIDE)}
-            IconBefore={IconPeople}
-          >
-            People
-          </Button>
-       )}
+          {!localParticipant.isObserver && !localParticipant.isOwner ? (
+            <Button className="translucent" onClick={() => toggleHandRaising()}>
+              {localParticipantHasHandRaised ? <LowerHand /> : <RaiseHand />}
+              {localParticipantHasHandRaised ? 'Lower Hand' : 'Raise Hand'}
+            </Button>
+          ) : null}
+          {localParticipant.isOwner && (
+            <Button
+              className="translucent"
+              onClick={() => toggleAside(PEOPLE_ASIDE)}
+              IconBefore={IconPeople}
+            >
+              People
+            </Button>
+          )}
+          <ChatTray isSmall={true} />
+          <BackRoomTray isSmall={true} />
+          <QuesTray isSmall={true} />
+          <RecordTray isSmall={true} />
+          <TranscriptTray isSmall={true} />
         </div>
       )}
       {!responsive.isMobile() ? (
@@ -143,15 +157,23 @@ export const BasicTray = () => {
           <TrayButton label="Settings" onClick={() => openModal(DEVICE_MODAL)}>
             <IconSettings />
           </TrayButton>
-          {(!localParticipant.isObserver && !localParticipant.isOwner) ? (
-          <TrayButton label={localParticipantHasHandRaised?'Lower Hand':'Raise Hand'} onClick={() => toggleHandRaising()}>
-            {localParticipantHasHandRaised ? <LowerHand /> : <RaiseHand />}
-          </TrayButton>
+          {!localParticipant.isObserver && !localParticipant.isOwner ? (
+            <TrayButton
+              label={
+                localParticipantHasHandRaised ? 'Lower Hand' : 'Raise Hand'
+              }
+              onClick={() => toggleHandRaising()}
+            >
+              {localParticipantHasHandRaised ? <LowerHand /> : <RaiseHand />}
+            </TrayButton>
           ) : null}
-         {localParticipant.isOwner && (
-          <TrayButton label="People" onClick={() => toggleAside(PEOPLE_ASIDE)}>
-            <IconPeople />
-          </TrayButton>
+          {localParticipant.isOwner && (
+            <TrayButton
+              label="People"
+              onClick={() => toggleAside(PEOPLE_ASIDE)}
+            >
+              <IconPeople />
+            </TrayButton>
           )}
         </>
       ) : (
@@ -164,26 +186,33 @@ export const BasicTray = () => {
 
       <span className="divider" />
 
-      <TrayButton label="Leave" onClick={async() => {
-        if(!localParticipant.isObserver && !localParticipant.isOwner)
-        await leftMeeting();
-        leave();
-      }} orange>
+      <TrayButton
+        label="Leave"
+        onClick={async () => {
+          if (!localParticipant.isObserver && !localParticipant.isOwner)
+            await leftMeeting();
+          leave();
+        }}
+        orange
+      >
         <IconLeave />
       </TrayButton>
-      <style jsx>{`
-        .tray { position: relative };
-        .more-options {
-          background: var(--background);
-          position: absolute;
-          transform: translateX(calc(-50% + 26px));
-          bottom: calc(15% + var(--spacing-xxxs));
-          z-index: 99;
-          padding: var(--spacing-xxxs);
-          border-radius: var(--radius-md);
-          box-shadow: var(--shadow-depth-2);
-        }
-      `}
+      <style jsx>
+        {`
+          .tray {
+            position: relative;
+          }
+          .more-options {
+            background: var(--background);
+            position: absolute;
+            transform: translateX(calc(-50% + 26px));
+            bottom: calc(15% + var(--spacing-xxxs));
+            z-index: 99;
+            padding: var(--spacing-xxxs);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-depth-2);
+          }
+        `}
       </style>
     </Tray>
   );

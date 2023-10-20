@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactComponent as IconClose } from '../../icons/close-sm.svg';
 import Button from '../Button';
-
-export const ASIDE_WIDTH = 380;
+export const ASIDE_WIDTH = 340;
 
 export const Aside = ({ onClose, children }) => (
   <aside className="call-aside">
@@ -50,6 +49,29 @@ export const Aside = ({ onClose, children }) => (
       .call-aside :global(.closeButton) {
         border-radius: var(--radius-sm) 0 0 var(--radius-sm);
         height: 48px;
+      }
+      @media (max-width: 1200px) {
+        .call-aside {
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 99;
+        }
+        .call-aside .inner {
+          width: 100%;
+          height: 100vh;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          padding: var(--spacing-xxs);
+        }
+        .call-aside .close {
+          left: calc(-30px);
+        }
+        .call-aside :global(.closeButton) {
+      
+          height: 30px;
+          width: 30px;
+        }
       }
     `}</style>
   </aside>

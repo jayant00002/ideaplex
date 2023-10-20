@@ -1,4 +1,5 @@
 import React from 'react';
+import { useResponsive } from '@custom/shared/hooks/useResponsive';
 import BackRoomTray from './BackRoom';
 import ChatTray from './Chat';
 import EmojiTray from './Emoji';
@@ -9,13 +10,18 @@ import Transcript from './Transcript';
 
 
 export const Tray = () => {
+    const responsive = useResponsive();
   return (
     <>
+    {!responsive.isMobile() && (
+      <>
       <ChatTray />
       <BackRoomTray />
       <QuesTray />
       <RecordTray />
       <Transcript />
+      </>
+    )}
       <ScreenShareTray />
       <EmojiTray />
     </>

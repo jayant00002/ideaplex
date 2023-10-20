@@ -54,45 +54,48 @@ export const QuesAside = () => {
 
   return (
     <Aside onClose={() => setShowAside(false)}>
-       <div className="aside-header">
-       
+      <div className="aside-header">
         <div
-          className={`tab ${showAside === QUES_ASIDE&& 'active'}`}
+          className={`tab ${showAside === QUES_ASIDE && 'active'}`}
           onClick={() => setShowAside(QUES_ASIDE)}
         >
           <p>Ques</p>
         </div>
       </div>
-      <Card variant='primary ma-2'>
-      <CardBody>
-        <div className="info-container">
-         <p>The Ques is for the observers and moderators only. You can interact with the observers and moderators by sending them a message. Any message you send will be visible to all the observers and moderators.</p>
-        </div>
-      </CardBody>
-    </Card>
-      
-      {localParticipant?.isOwner  && (
-        <div className="messages-container" ref={chatWindowRef}>
-        { chatHistory?.map((chatItem) => (
-          <div className={(chatItem.isObserver  || chatItem.receiver ==='observer') ?'show':'hide'}
-          key={chatItem.id}
-          >
-          <div
-            className={chatItem.isLocal ? 'message local' : 'message'}
-            key={chatItem.id}
-          >
-            <span className="content">{chatItem.message}</span>
-            <span className="sender">{chatItem.sender}</span>
-
-          </div>
-          </div>
-        ))}
+      <div className="info-container">
+        <p>
+          The Ques is for the observers and moderators only. You can interact
+          with the observers and moderators by sending them a message. Any
+          message you send will be visible to all the observers and moderators.
+        </p>
       </div>
+
+      {localParticipant?.isOwner && (
+        <div className="messages-container" ref={chatWindowRef}>
+          {chatHistory?.map((chatItem) => (
+            <div
+              className={
+                chatItem.isObserver || chatItem.receiver === 'observer'
+                  ? 'show'
+                  : 'hide'
+              }
+              key={chatItem.id}
+            >
+              <div
+                className={chatItem.isLocal ? 'message local' : 'message'}
+                key={chatItem.id}
+              >
+                <span className="content">{chatItem.message}</span>
+                <span className="sender">{chatItem.sender}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
 
       {showEmojis && (
         <div className="emojis">
-          {emojis.map(emoji => (
+          {emojis.map((emoji) => (
             <Button
               key={emoji}
               variant="gray"
@@ -104,7 +107,7 @@ export const QuesAside = () => {
           ))}
         </div>
       )}
-      <footer className={"chat-footer"}>
+      <footer className={'chat-footer'}>
         <Button
           variant="gray"
           size="small-circle"
@@ -115,7 +118,7 @@ export const QuesAside = () => {
         <TextInput
           value={newMessage}
           placeholder="Type message here"
-          variant={"transparent"}
+          variant={'transparent'}
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <Button
@@ -123,11 +126,10 @@ export const QuesAside = () => {
           variant="transparent"
           disabled={!newMessage}
           onClick={() => {
-            
-           if( localParticipant?.isOwner){
-              sendMessage(newMessage, 'observer')
+            if (localParticipant?.isOwner) {
+              sendMessage(newMessage, 'observer');
             }
-           
+
             setNewMessage('');
           }}
         >
@@ -163,6 +165,11 @@ export const QuesAside = () => {
         }
         .info-container {
           color: var(--primary-dark);
+          width: 100%;
+          background-color: #d9edf7;
+          margin-top: 20px;
+          padding: 20px;
+          border-radius: 8px;
         }
         .observer-tab {
           background: #3c3e46;
@@ -216,7 +223,7 @@ export const QuesAside = () => {
           color: var(--gray-dark);
           margin-top: 0.5rem;
         }
-        
+
         .tab {
           height: 100%;
           width: 50%;
@@ -225,10 +232,9 @@ export const QuesAside = () => {
           justify-content: center;
           align-items: center;
         }
-        
+
         .tab.active {
-         
-          color: var(--text-default)!important;
+          color: var(--text-default) !important;
           font-weight: 900;
         }
         .hide {

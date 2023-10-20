@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-
-
-
+import Button from '@custom/shared/components/Button';
 import { TrayButton } from '@custom/shared/components/Tray';
 import { useCallState } from '@custom/shared/contexts/CallProvider';
 import { useParticipants } from '@custom/shared/contexts/ParticipantsProvider';
@@ -17,7 +15,7 @@ import {
 import { RECORDING_MODAL } from '../Record/RecordingModal';
 
 
-export const Tray = () => {
+export const Tray = ({isSmall}) => {
   const { enableRecording } = useCallState();
   const { openModal } = useUIState();
   const { recordingState } = useRecording();
@@ -45,6 +43,16 @@ export const Tray = () => {
     }
 
   return (
+    <>
+     {isSmall ? (
+       <Button
+                className="translucent"
+                onClick={() => openModal(RECORDING_MODAL)}
+                IconBefore={IconRecord}
+              >
+                {isRecording ? 'Stop' : 'Record'}
+       </Button>
+      ) : (
     <TrayButton
       label={isRecording ? 'Stop' : 'Record'}
       orange={isRecording}
@@ -52,6 +60,8 @@ export const Tray = () => {
     >
       <IconRecord />
     </TrayButton>
+    )}
+    </>
   );
 };
 

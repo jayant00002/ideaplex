@@ -11,7 +11,6 @@ import {ReactComponent as IconSpeaker} from '@custom/shared/icons/speaker-view-m
 import { slugify } from '@custom/shared/lib/slugify';
 import { INVITE_MODAL } from './InviteLinksModal';
 
-
 export const Header = () => {
   const { roomInfo } = useCallState();
   const { participantCount, localParticipant } = useParticipants();
@@ -34,16 +33,15 @@ export const Header = () => {
           {slugify.revert(roomInfo.name)}
         </HeaderCapsule>
         {!localParticipant.isObserver ? (
-        <HeaderCapsule>
-          {`${participantCount} ${
-            participantCount === 1 ? 'participant' : 'participants'
-          }`}
-        </HeaderCapsule>
-        ) : (
-          null
-        )}
+          <div className="invite">
+            <HeaderCapsule>
+              {`${participantCount} ${
+                participantCount === 1 ? 'participant' : 'participants'
+              }`}
+            </HeaderCapsule>
+          </div>
+        ) : null}
 
-       
         {customCapsule && (
           <HeaderCapsule variant={customCapsule.variant}>
             {customCapsule.variant === 'recording' && <span />}
@@ -51,46 +49,38 @@ export const Header = () => {
           </HeaderCapsule>
         )}
         {localParticipant.isOwner ? (
-          <Button
-            className="invite"
-            variant="outline-primary"
-            onClick={() => {
-              openModal(INVITE_MODAL);
-            }}
-          >
-            Invite Others
+          <div className="invite invite-btn" onClick={() => openModal(INVITE_MODAL)}>
+            <span className="invite-text">Invite</span>
             <span className="icon">
               <AddOthersIcon />
             </span>
-          </Button>
-        ) : (
-          null
-        )}
-        {viewMode!=='fullscreen'?(
-        <div className="view-switcher" >
-        <Button 
-          className="grid-view"
-          variant={viewMode === 'grid' ? 'primary' : 'outline-gray'}
-          size = "tiny-square"
-          onClick={() => {
-            setPinnedId(null);
-            setViewMode('grid');
-          }}
-        >
-          <IconGrid />
-        </Button>
-        <Button
-          className="speaker-view"
-          variant={viewMode === 'speaker' ? 'primary' : 'outline-gray'}
-          size = "tiny-square"
-          onClick={() => {
-            setViewMode('speaker');
-          }}
-        >
-          <IconSpeaker />
-        </Button>
-        </div>
-        ):null}
+          </div>
+        ) : null}
+        {viewMode !== 'fullscreen' ? (
+          <div className="view-switcher">
+            <Button
+              className="grid-view"
+              variant={viewMode === 'grid' ? 'primary' : 'outline-gray'}
+              size="tiny-square"
+              onClick={() => {
+                setPinnedId(null);
+                setViewMode('grid');
+              }}
+            >
+              <IconGrid />
+            </Button>
+            <Button
+              className="speaker-view"
+              variant={viewMode === 'speaker' ? 'primary' : 'outline-gray'}
+              size="tiny-square"
+              onClick={() => {
+                setViewMode('speaker');
+              }}
+            >
+              <IconSpeaker />
+            </Button>
+          </div>
+        ) : null}
         <style jsx>{`
           .room-header {
             display: flex;
@@ -101,14 +91,15 @@ export const Header = () => {
               var(--spacing-sm);
             align-items: center;
             width: 100%;
+            flex-wrap: wrap;
           }
 
           .logo {
             margin-right: var(--spacing-xs);
           }
           .invite {
-            margin-left: auto;
-            margin-right: var(--spacing-xs);
+            margin-left: 0;
+            margin-right: 0;
           }
           .icon {
             margin-left: var(--spacing-xxs);
@@ -122,7 +113,37 @@ export const Header = () => {
             margin-left: auto;
             margin-right: var(--spacing-xs);
           }
-
+          .invite-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-direction: row;
+            width: max-content;
+            background-color: var(--primary-default);
+            padding: 6px 10px;
+            border-radius: 10px;
+            color :black;
+          }
+          @media (max-width: 768px) {
+            .room-header {
+              padding: var(--spacing-xxs) var(--spacing-xs) var(--spacing-xs)
+                var(--spacing-xs);
+            }
+            .invite {
+              display: none;
+            }
+            .invite-btn {
+              display:flex;
+              gap:0;
+            }
+            .invite-text {
+              display: none;
+            }
+            .logo {
+              margin-right: 0;
+            }
+          }
         `}</style>
       </header>
     ),

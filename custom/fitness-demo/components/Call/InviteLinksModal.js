@@ -174,6 +174,20 @@ export const InviteLinksModal = () => {
                 gap: 10px;
                 margin: 10px 0;
               }
+              @media (max-width: 768px) {
+                .link {
+                  flex-direction: column;
+                  align-items: center;
+                }
+                .tab{
+                  width:100%;
+                }
+                .tabs {
+                  flex-direction: column;
+                  align-items: center;
+                }
+              }
+
             `}</style>
 
         </Modal>
