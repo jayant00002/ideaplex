@@ -67,7 +67,7 @@ export const GridView = ({
       if (frame) cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const width = gridRef.current?.clientWidth;
-        const height = gridRef.current?.clientHeight;
+        const height = 0.9* gridRef.current?.clientHeight;
         setDimensions({ width, height });
       });
     };

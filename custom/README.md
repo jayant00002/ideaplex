@@ -31,7 +31,7 @@ Demonstrates using manual track management to support larger call sizes
 ---
 
 ## Getting started
- 
+
 We recommend starting with the [basic call](./basic-call) example, showcasing the common flow of a call Daily call, device management and error handling.
 
 Run an examples with `yarn workspace @custom/[demo-name] dev` (replacing `[demo-name]` with the name of the demo you'd like to run e.g. `basic-call`.
