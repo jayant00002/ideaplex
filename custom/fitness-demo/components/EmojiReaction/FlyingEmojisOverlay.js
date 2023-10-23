@@ -23,7 +23,8 @@ export const FlyingEmojisOverlay = () => {
       if (!overlayRef.current) {
         return;
       }
-
+      if(!emoji) return;
+      if(!EMOJI_MAP[emoji]) return;
       console.log(`⭐ Displaying flying emoji: ${emoji}`);
 
       const node = document.createElement('div');
@@ -47,7 +48,7 @@ export const FlyingEmojisOverlay = () => {
       if (!overlayRef.current) {
         return;
       }
-
+     if(e.data.message.type) return;
       console.log(`🚨 New emoji message received: ${e.data.message}`);
       handleDisplayFlyingEmoji(e.data.message);
     },

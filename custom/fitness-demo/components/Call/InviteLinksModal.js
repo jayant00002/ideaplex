@@ -12,7 +12,7 @@ export const InviteLinksModal = () => {
     const {roomInfo} = useCallState();
     const { currentModals, closeModal } = useUIState();
     const [token,setToken] = useState('');
-    const data = ['1' , '2' , '3' , '4' , '5'];
+    const data = ['1' , '2' , '3' , '4' , '5','6','7','8'];
   const [participantTokens,setParticipantTokens] = useState([]);
  
     const [linkType, setLinkType] = useState("participant");
@@ -23,7 +23,7 @@ export const InviteLinksModal = () => {
     if(!localParticipant?.isOwner) return;
     setToken(await   generateOwnerToken());
     setParticipantTokens([]);
-     for(let i=1;i<=5;i++)
+     for(let i=1;i<=8;i++)
      {
        const participantToken = await generateParticipantToken(i,roomName);
        setParticipantTokens(participantTokens => [...participantTokens,participantToken]);

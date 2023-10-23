@@ -348,13 +348,14 @@ export const GridView = ({
           .grid .tiles {
             align-items: center;
             display: flex;
-            flex-flow: row wrap;
-            gap: 1px;
+            flex-flow: row nowrap;
+            gap: 10px;
             max-height: 100%;
             justify-content: center;
             margin: auto;
             overflow: hidden;
             width: 100%;
+            border-radius: var(--radius-sm);
           }
   
           .grid :global(.page-button) {
@@ -374,6 +375,11 @@ export const GridView = ({
   
           .grid :global(.page-button.prev) {
             transform: scaleX(-1);
+          }
+          @media (max-width: 1024px) {
+            .grid .tiles {
+              flex-flow: row wrap;
+            }
           }
         `}</style>
         </div>

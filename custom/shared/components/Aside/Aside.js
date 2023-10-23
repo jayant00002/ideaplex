@@ -73,6 +73,14 @@ export const Aside = ({ onClose, children }) => (
           width: 30px;
         }
       }
+      @media (max-width: 480px) {
+        .call-aside {
+        height: 100dvh;
+        }
+        .call-aside .inner {
+          height: 100dvh;
+        }
+      }
     `}</style>
   </aside>
 );
