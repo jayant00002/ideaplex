@@ -29,16 +29,14 @@ import Header from '../Call/Header';
 const MIN_TILE_WIDTH = 280;
 const MAX_TILES_PER_PAGE = 12;
 
-export const GridView = ({
- maxTilesPerPage = MAX_TILES_PER_PAGE,
-}) => {
+export const GridView = ({ maxTilesPerPage = MAX_TILES_PER_PAGE }) => {
   const { callObject } = useCallState();
   const {
     activeParticipant,
     participantCount,
     participants,
     swapParticipantPosition,
-    screens
+    screens,
   } = useParticipants();
   const activeSpeakerId = useActiveSpeaker();
 
@@ -68,6 +66,7 @@ export const GridView = ({
       frame = requestAnimationFrame(() => {
         const width = gridRef.current?.clientWidth;
         const height = gridRef.current?.clientHeight;
+        console.log('width', 'height', width, height);
         setDimensions({ width, height });
       });
     };
@@ -83,9 +82,14 @@ export const GridView = ({
   // Memoized reference to the max columns and rows possible given screen size
   const [maxColumns, maxRows] = useMemo(() => {
     const { width, height } = dimensions;
-    const columns = Math.max(1, Math.floor(width / MIN_TILE_WIDTH));
-    const widthPerTile = width / columns;
-    const rows = Math.max(1, Math.floor(height / (widthPerTile * (9 / 16))));
+
+    const columns = Math.max(1, Math.floor(width / (MIN_TILE_WIDTH + 20)));
+    const widthPerTile = width / columns - 20;
+    const rows = Math.max(
+      1,
+      Math.floor(height / (widthPerTile * (9 / 16) + 20))
+    );
+    console.log('MaxRows, MaxCol', rows, columns);
     return [columns, rows];
   }, [dimensions]);
 
@@ -141,12 +145,13 @@ export const GridView = ({
   const visibleParticipants = useMemo(
     () =>
       allParticipantsandScreens.length - page * pageSize > 0
-        ? allParticipantsandScreens.slice((page - 1) * pageSize, page * pageSize)
+        ? allParticipantsandScreens.slice(
+            (page - 1) * pageSize,
+            page * pageSize
+          )
         : allParticipantsandScreens.slice(-pageSize),
     [page, pageSize, allParticipantsandScreens]
   );
- 
-
 
   /**
    * Play / pause tracks based on pagination
@@ -172,12 +177,12 @@ export const GridView = ({
         break;
       // Any other page
       default:
-      {
-        const buffer = (maxSubs - pageSize) / 2;
-        const min = (page - 1) * pageSize - buffer;
-        const max = page * pageSize + buffer;
-        renderedOrBufferedIds = participants.slice(min, max).map((p) => p.id);
-      }
+        {
+          const buffer = (maxSubs - pageSize) / 2;
+          const min = (page - 1) * pageSize - buffer;
+          const max = page * pageSize + buffer;
+          renderedOrBufferedIds = participants.slice(min, max).map((p) => p.id);
+        }
         break;
     }
 
@@ -278,31 +283,28 @@ export const GridView = ({
 
   const tiles = useDeepCompareMemo(
     () =>
-      visibleParticipants.map((p) => (
-        (!p.isObserver?(
-        <Tile
-          participant={p}
-          mirrored ={!p.isScreenshare}
-          key={p.id}
-          style={{
-            maxHeight: tileHeight,
-            maxWidth: tileWidth,
-          }}
-        />
-        ):null)
-      )),
+      visibleParticipants.map((p) =>
+        !p.isObserver ? (
+          <Tile
+            participant={p}
+            mirrored={!p.isScreenshare}
+            key={p.id}
+            style={{
+              maxHeight: tileHeight - 20,
+              maxWidth: tileWidth - 20,
+            }}
+          />
+        ) : null
+      ),
     [
       activeParticipant,
       participantCount,
       tileWidth,
       tileHeight,
       visibleParticipants,
-      screens
+      screens,
     ]
   );
-
-
-
 
   const handlePrevClick = () => setPage((p) => p - 1);
   const handleNextClick = () => setPage((p) => p + 1);
@@ -312,7 +314,7 @@ export const GridView = ({
       <Header />
       <VideoContainer>
         <div ref={gridRef} className="grid">
-          {(pages > 1 && page > 1) && (
+          {pages > 1 && page > 1 && (
             <Button
               className="page-button prev"
               type="button"
@@ -321,11 +323,9 @@ export const GridView = ({
               <IconArrow />
             </Button>
           )}
-          <div className="tiles">
-            {tiles}
-          </div>
+          <div className="tiles">{tiles}</div>
 
-          {(pages > 1 && page < pages) && (
+          {pages > 1 && page < pages && (
             <Button
               className="page-button next"
               type="button"
@@ -336,46 +336,52 @@ export const GridView = ({
           )}
 
           <style jsx>{`
-          .grid {
-            align-items: center;
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            position: relative;
-            width: 100%;
-          }
-  
-          .grid .tiles {
-            align-items: center;
-            display: flex;
-            flex-flow: row wrap;
-            gap: 1px;
-            max-height: 100%;
-            justify-content: center;
-            margin: auto;
-            overflow: hidden;
-            width: 100%;
-          }
-  
-          .grid :global(.page-button) {
-            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-            height: 84px;
-            padding: 0px var(--spacing-xxxs) 0px var(--spacing-xxs);
-            background-color: var(--blue-default);
-            color: white;
-            border-right: 0px;
-          }
-  
-          .grid :global(.page-button):disabled {
-            color: var(--blue-dark);
-            background-color: var(--blue-light);
-            border-color: var(--blue-light);
-          }
-  
-          .grid :global(.page-button.prev) {
-            transform: scaleX(-1);
-          }
-        `}</style>
+            .grid {
+              align-items: center;
+              display: flex;
+              height: 100%;
+              justify-content: center;
+              position: relative;
+              width: 100%;
+            }
+
+            .grid .tiles {
+              align-items: center;
+              display: flex;
+              flex-flow: wrap;
+              gap: 6px 10px;
+              max-height: 100%;
+              justify-content: center;
+              margin: auto;
+              overflow: hidden;
+              width: 100%;
+              border-radius: var(--radius-sm);
+            }
+
+            .grid :global(.page-button) {
+              border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+              height: 84px;
+              padding: 0px var(--spacing-xxxs) 0px var(--spacing-xxs);
+              background-color: var(--blue-default);
+              color: white;
+              border-right: 0px;
+            }
+
+            .grid :global(.page-button):disabled {
+              color: var(--blue-dark);
+              background-color: var(--blue-light);
+              border-color: var(--blue-light);
+            }
+
+            .grid :global(.page-button.prev) {
+              transform: scaleX(-1);
+            }
+            @media (max-width: 1024px) {
+              .grid .tiles {
+                flex-flow: row wrap;
+              }
+            }
+          `}</style>
         </div>
       </VideoContainer>
     </Container>

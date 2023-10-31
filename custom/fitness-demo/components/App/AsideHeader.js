@@ -12,21 +12,24 @@ export const AsideHeader = () => {
   return (
     <>
       <div className="aside-header">
-        {localParticipant.isOwner && (
-        <div
-          className={`tab ${showAside === PEOPLE_ASIDE && 'active'}`}
-          onClick={() => setShowAside(PEOPLE_ASIDE)}
-        >
-          <p>People</p>
-        </div>
+        {localParticipant.isOwner && showAside === PEOPLE_ASIDE && (
+          <div
+            className={`tab ${showAside === PEOPLE_ASIDE && 'active'}`}
+            onClick={() => setShowAside(PEOPLE_ASIDE)}
+          >
+            <p>People</p>
+          </div>
         )}
-        <div
-          className={`tab ${showAside === CHAT_ASIDE && 'active'}`}
-          onClick={() => setShowAside(CHAT_ASIDE)}
-        >
-          <p>{localParticipant.isObserver? "Ques": "Chat"}</p>
-        </div>
+        {showAside === CHAT_ASIDE && (
+          <div
+            className={`tab ${showAside === CHAT_ASIDE && 'active'}`}
+            onClick={() => setShowAside(CHAT_ASIDE)}
+          >
+            <p>{localParticipant.isObserver ? 'Ques' : 'Chat'}</p>
+          </div>
+        )}
       </div>
+
       <style jsx>{`
         .aside-header {
           display: flex;
@@ -37,22 +40,29 @@ export const AsideHeader = () => {
           text-align: center;
           background: var(--gray-wash);
           color: var(--gray-dark);
+          border-radius: var(--radius-sm) !important;
+          margin-top: 0.5rem;
         }
-        
+
         .tab {
           height: 100%;
-          width: 50%;
+          width: 100%;
           cursor: pointer;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          
         }
-        
+
         .tab.active {
-          background: var(--reverse)!important;
-          color: var(--text-default)!important;
+          background: var(--gray-wash);
+          color: var(--text-default) !important;
           font-weight: 900;
         }
       `}</style>
     </>
-  )
+  );
 };
 
 export default AsideHeader;

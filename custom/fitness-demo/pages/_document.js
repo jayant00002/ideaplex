@@ -10,6 +10,8 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=optional"
             rel="stylesheet"
           />
+          
+
         </Head>
         <body>
           <Main />

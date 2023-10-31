@@ -62,6 +62,9 @@ export const App = ({ customComponentForState }) => {
                     .loader {
                       margin: 0 auto;
                     }
+                    @media (max-width: 480px) {
+                      height: 100dvh;
+                    }
                   `}</style>
                 </div>
               </ClassStateProvider>

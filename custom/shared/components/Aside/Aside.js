@@ -28,6 +28,9 @@ export const Aside = ({ onClose, children }) => (
         box-sizing: border-box;
         box-shadow: 0px 15px 35px rgba(18, 26, 36, 0.25);
         color: var(--text-default);
+        border-radius: var(--radius-sm) !important;
+        border: 1px solid var(--gray-wash);
+      
       }
 
       .call-aside .inner {
@@ -40,15 +43,18 @@ export const Aside = ({ onClose, children }) => (
 
       .call-aside .close {
         position: absolute;
-        top: var(--spacing-xxs);
-        left: calc(-43px);
-        border-right: 1px solid var(--gray-wash);
+        top: 0;
+        right:10px;
+        border: 1px solid var(--gray-wash);
+        background: var(--gray-wash);
         z-index: 99;
+        border-radius: 50%;
       }
 
       .call-aside :global(.closeButton) {
-        border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-        height: 48px;
+        border-radius: 50%;
+        height: 40px;
+        background: var(--gray-wash);
       }
       @media (max-width: 1200px) {
         .call-aside {
@@ -64,13 +70,14 @@ export const Aside = ({ onClose, children }) => (
           overflow-x: hidden;
           padding: var(--spacing-xxs);
         }
-        .call-aside .close {
-          left: calc(-30px);
+        
+      }
+      @media (max-width: 480px) {
+        .call-aside {
+        height: 100dvh;
         }
-        .call-aside :global(.closeButton) {
-      
-          height: 30px;
-          width: 30px;
+        .call-aside .inner {
+          height: 100dvh;
         }
       }
     `}</style>

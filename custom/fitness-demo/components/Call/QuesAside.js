@@ -226,7 +226,7 @@ export const QuesAside = () => {
 
         .tab {
           height: 100%;
-          width: 50%;
+          width: 100%;
           cursor: pointer;
           display: flex;
           justify-content: center;
